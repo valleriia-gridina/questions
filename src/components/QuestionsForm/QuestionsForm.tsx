@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { questions } from "../constants";
+import { useState, useEffect } from "react";
+import { questions as originalQuestions } from "../constants";
 import QuestionCard from "../QuestionCard/QuestionCard";
 import cx from "classnames";
 
@@ -9,10 +9,47 @@ type TAnswers = {
   selectedAnswerId: number | null;
 };
 
+type AnswerOption = {
+  id: number;
+  title: string;
+  isCorrect: boolean;
+};
+
+type Question = {
+  id: number;
+  title: string;
+  answerOptions: AnswerOption[];
+  explanation: string;
+};
+
+const shuffleArray = <T,>(array: T[]): T[] => {
+  const shuffledArray = [...array];
+  for (let i = shuffledArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+  }
+  return shuffledArray;
+};
+
 const QuestionsForm = () => {
+  const [questions, setQuestions] = useState<Question[]>(originalQuestions);
   const [activeQuestion, setActiveQuestion] = useState(0);
   const [answers, setAnswers] = useState<TAnswers[]>([]);
   const [finish, setFinish] = useState(false);
+
+  const [quantity, setQuantity] = useState<number>(10);
+
+  useEffect(() => {
+    const qtyQuestions = originalQuestions.slice(0, quantity);
+    const shuffledQuestions = shuffleArray(qtyQuestions).map((question) => ({
+      ...question,
+      answerOptions: shuffleArray(question.answerOptions),
+    }));
+    setQuestions(shuffledQuestions);
+    console.log("qty of questions:", quantity);
+  }, [quantity]);
+
+  console.log("quantity", quantity);
 
   const handleShowNext = () => {
     setActiveQuestion(activeQuestion + 1);
@@ -59,6 +96,22 @@ const QuestionsForm = () => {
     setActiveQuestion(0);
     setAnswers([]);
     setFinish(false);
+
+    // const shuffledQuestions = shuffleArray(originalQuestions).map(
+    //   (question) => ({
+    //     ...question,
+    //     answerOptions: shuffleArray(question.answerOptions),
+    //   })
+    // );
+    // setQuestions(shuffledQuestions);
+  };
+
+  const handleQuantity = (e: { target: { value: string } }) => {
+    const inputNumber = parseInt(e.target.value);
+    if (!isNaN(inputNumber)) {
+      setQuantity(inputNumber);
+    }
+    console.log("setQuantity", inputNumber);
   };
 
   return (
@@ -108,6 +161,11 @@ const QuestionsForm = () => {
               : `Вы провалили тест. Правильных ответов: ${correctAnswersCount}`}
           </span>
           <div>
+            <input
+              type="text"
+              placeholder="Enter questions quantity... "
+              onChange={handleQuantity}
+            />
             <button onClick={handleStartNewTest}>Start new test</button>
           </div>
         </div>

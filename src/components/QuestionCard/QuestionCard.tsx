@@ -20,11 +20,8 @@ const QuestionCard = ({
 }: TProps) => {
   const [isCorrect, setIsCorrect] = useState<undefined | boolean>(undefined);
 
-  // const [isChecked, setIsChecked] = useState(false);
-
   useEffect(() => {
     setIsCorrect(undefined);
-    // setIsChecked(false);
   }, [id]);
 
   return (
@@ -44,7 +41,6 @@ const QuestionCard = ({
                 onChange={() => {
                   handleAnswer(id, item.id, item.isCorrect);
                   setIsCorrect(item.isCorrect);
-                  // setIsChecked(true);
                 }}
               />
               {item.title}
