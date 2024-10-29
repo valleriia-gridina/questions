@@ -1,8 +1,7 @@
 #root {
-  max-width: 1280px;
+  width: 1000px;
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
 }
 
 .logo {
@@ -41,16 +40,24 @@
   color: #888;
 }
 
-.questionList {
+.pagination {
   display: flex;
   list-style: none;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 15px;
 }
 
-.question {
+.paginationItem {
   padding: 5px;
   border: solid 1px grey;
-
   background-color: lightgrey;
+}
+
+.paginationItem button:focus,
+.paginationItem button:active {
+  outline: 0;
 }
 
 .isCorrect {
@@ -59,4 +66,63 @@
 
 .isWrong {
   background-color: red;
+}
+
+.isActive {
+  font-weight: 700;
+  border: 2px solid #000;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 15px;
+}
+
+.questions li {
+  margin-bottom: 10px;
+}
+
+.btnNumber {
+  padding: 0 2px;
+  background-color: transparent;
+}
+
+.nextBtn {
+  margin-bottom: 15px;
+}
+
+.result {
+  font-weight: 700;
+  color: green;
+}
+
+.failed {
+  text-align: center;
+  font-weight: 700;
+  color: red;
+}
+
+.explanation {
+  color: red;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 15px;
+}
+
+input {
+  margin-bottom: 10px;
+}
+
+.error {
+  color: red;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+em {
+  color: grey;
 }
