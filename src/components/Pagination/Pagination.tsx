@@ -23,7 +23,7 @@ const Pagination = ({
   return (
     <>
       <button
-        className={"nextBtn"}
+        className={"btn"}
         onClick={onClickBack}
         style={{ margin: "20px" }}
         disabled={activeQuestionIndex === 0}
@@ -33,18 +33,14 @@ const Pagination = ({
 
       {activeQuestionIndex !== questions.length - 1 ? (
         <button
-          className={"nextBtn"}
+          className={"btn"}
           onClick={onClickNext}
           style={{ margin: "10px" }}
         >
           next
         </button>
       ) : (
-        <button
-          className={"nextBtn"}
-          onClick={onFinish}
-          style={{ margin: "10px" }}
-        >
+        <button className={"btn"} onClick={onFinish} style={{ margin: "10px" }}>
           finish test
         </button>
       )}
