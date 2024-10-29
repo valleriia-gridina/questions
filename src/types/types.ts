@@ -1,9 +1,7 @@
-export type TAnswerOption = { id: number; title: string; isCorrect: boolean };
-
 export type TQuestion = {
   id: number;
   title: string;
-  answerOptions: TAnswerOption[];
+  answerOptions: { id: number; title: string; isCorrect: boolean }[];
   explanation: string;
   currentNumber: number;
 };

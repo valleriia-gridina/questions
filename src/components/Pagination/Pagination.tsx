@@ -51,14 +51,16 @@ const Pagination = ({
 
       <ul className={"pagination"}>
         {questions.map((question, index) => {
-          const el = answers.find((answer) => answer.id === question.id);
+          const answerOption = answers.find(
+            (answer) => answer.id === question.id
+          );
 
           return (
             <li
               key={question.id}
               className={cx(`paginationItem`, {
-                isCorrect: el?.isCorrect,
-                isWrong: el && !el?.isCorrect,
+                isCorrect: answerOption?.isCorrect,
+                isWrong: answerOption && !answerOption?.isCorrect,
                 isActive: index === activeQuestionIndex,
               })}
             >
