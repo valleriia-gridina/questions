@@ -64,7 +64,7 @@ const TestPage = () => {
 
   return (
     <>
-      <h3>Test page</h3>
+      <h3>Test page test</h3>
       <p>
         You have <strong>{questionsNumber} questions</strong>. You can make only{" "}
         <strong>{mistakesNumber} mistake(s)</strong>
