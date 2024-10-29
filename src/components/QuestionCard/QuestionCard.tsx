@@ -2,7 +2,7 @@ import { TAnswer, TQuestion } from "../../types/types";
 
 interface TProps extends TQuestion {
   onHandleAnswer: (answer: TAnswer) => void;
-  activeQuestion?: TAnswer;
+  answer?: TAnswer;
 }
 
 const QuestionCard = ({
@@ -12,7 +12,7 @@ const QuestionCard = ({
   explanation,
   currentNumber,
   onHandleAnswer,
-  activeQuestion,
+  answer,
 }: TProps) => {
   return (
     <li>
@@ -20,9 +20,9 @@ const QuestionCard = ({
         {currentNumber}. {title} <em>{id} - id number for test</em>
       </h3>
 
-      {answerOptions.map((item) => {
+      {answerOptions.map((answ) => {
         return (
-          <div key={item.id}>
+          <div key={answ.id}>
             <label>
               <input
                 type="radio"
@@ -30,21 +30,21 @@ const QuestionCard = ({
                 onChange={() => {
                   onHandleAnswer({
                     id,
-                    isCorrect: item.isCorrect,
+                    isCorrect: answ.isCorrect,
                     isDisabled: true,
-                    value: item.title,
+                    value: answ.title,
                   });
                 }}
-                checked={activeQuestion?.value === item.title}
-                value={item.title}
-                disabled={activeQuestion?.isDisabled}
+                checked={answer?.value === answ.title}
+                value={answ.title}
+                disabled={answer?.isDisabled}
               />
-              {item.title} <em>{item.id} - id number for test</em>
+              {answ.title} <em>{answ.id} - id number for test</em>
             </label>
           </div>
         );
       })}
-      {activeQuestion && !activeQuestion?.isCorrect && (
+      {answer && !answer?.isCorrect && (
         <p className="explanation">{explanation}</p>
       )}
     </li>

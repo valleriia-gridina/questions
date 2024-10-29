@@ -58,7 +58,7 @@ const TestPage = () => {
     setActiveQuestionIndex(index);
   };
 
-  const activeQuestion = answers.find(
+  const answer = answers.find(
     (el) => el.id === questions[activeQuestionIndex].id
   );
 
@@ -74,7 +74,7 @@ const TestPage = () => {
         <QuestionCard
           {...questions[activeQuestionIndex]}
           onHandleAnswer={handleAnswer}
-          activeQuestion={activeQuestion}
+          answer={answer}
         />
       </ul>
 
