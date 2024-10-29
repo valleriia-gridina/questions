@@ -1,5 +1,5 @@
 import cx from "classnames";
-import { TAnswer, TQuestion } from "../types";
+import { TAnswer, TQuestion } from "../../types/types";
 
 type TProps = {
   questions: TQuestion[];

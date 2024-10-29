@@ -1,4 +1,4 @@
-import { TAnswer, TQuestion } from "../types";
+import { TAnswer, TQuestion } from "../../types/types";
 
 interface TProps extends TQuestion {
   onHandleAnswer: (answer: TAnswer) => void;

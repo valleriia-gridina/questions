@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
-import { QUESTIONS } from "../../components/constants";
-import { shuffleArray } from "../../components/helpers";
+import { QUESTIONS } from "../../constants/constants";
+import { shuffleArray } from "../../helpers/helpers";
 import QuestionCard from "../../components/QuestionCard/QuestionCard";
-import { TAnswer } from "../../components/types";
+import { TAnswer } from "../../types/types";
 import Pagination from "../../components/Pagination/Pagination";
 import { useLocation, useNavigate } from "react-router-dom";
 
