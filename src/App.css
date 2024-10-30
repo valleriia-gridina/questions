@@ -121,4 +121,14 @@
 .link {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+}
+.page404 {
+  display: flex;
+  flex-direction: column;
+}
+.notFound {
+  display: flex;
+  flex-direction: column;
+  font-size: 32px;
 }
