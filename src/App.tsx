@@ -1,8 +1,5 @@
 import "./App.css";
-import QuestionsForm from "./components/QuestionsForm/QuestionsForm";
 
-function App() {
-  return <QuestionsForm />;
-}
+function App() {}
 
 export default App;

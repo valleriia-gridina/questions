@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { TQuestion } from "../types";
 
+// answers item types:
 interface TProps extends TQuestion {
   handleAnswer: (
     questionId: number,
@@ -10,6 +11,7 @@ interface TProps extends TQuestion {
   selectedAnswerId: number | null;
 }
 
+// Current answer props
 const QuestionCard = ({
   id,
   title,
@@ -26,9 +28,7 @@ const QuestionCard = ({
 
   return (
     <li>
-      <span>Текущий вопрос: {id}</span>
       <h3>{title}</h3>
-
       {answerOptions.map((item) => {
         return (
           <div key={item.id}>
@@ -48,7 +48,7 @@ const QuestionCard = ({
           </div>
         );
       })}
-
+      {/* show explanation if answer is incorrect */}
       {!isCorrect && isCorrect !== undefined && <p>{explanation}</p>}
     </li>
   );

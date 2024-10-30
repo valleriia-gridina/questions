@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { questions as originalQuestions } from "../constants";
 import QuestionCard from "../QuestionCard/QuestionCard";
+import { Link } from "react-router-dom";
 import cx from "classnames";
 
 type TAnswers = {
@@ -22,6 +23,12 @@ type Question = {
   explanation: string;
 };
 
+type QuestionsProps = {
+  quantityOfQuestions: number;
+};
+
+// Shuffle the questions array
+
 const shuffleArray = <T,>(array: T[]): T[] => {
   const shuffledArray = [...array];
   for (let i = shuffledArray.length - 1; i > 0; i--) {
@@ -31,25 +38,29 @@ const shuffleArray = <T,>(array: T[]): T[] => {
   return shuffledArray;
 };
 
-const QuestionsForm = () => {
+const QuestionsForm: React.FC<QuestionsProps> = ({ quantityOfQuestions }) => {
   const [questions, setQuestions] = useState<Question[]>(originalQuestions);
   const [activeQuestion, setActiveQuestion] = useState(0);
   const [answers, setAnswers] = useState<TAnswers[]>([]);
-  const [finish, setFinish] = useState(false);
 
-  const [quantity, setQuantity] = useState<number>(10);
-
+  // Shuffle answers
   useEffect(() => {
-    const qtyQuestions = originalQuestions.slice(0, quantity);
-    const shuffledQuestions = shuffleArray(qtyQuestions).map((question) => ({
-      ...question,
-      answerOptions: shuffleArray(question.answerOptions),
-    }));
-    setQuestions(shuffledQuestions);
-    console.log("qty of questions:", quantity);
-  }, [quantity]);
+    const shuffledQuestions = shuffleArray(originalQuestions).map(
+      (question) => ({
+        ...question,
+        answerOptions: shuffleArray(question.answerOptions),
+      })
+    );
+    // Show exact quantity of questions
+    const qtyQuestionsShuffeled = shuffledQuestions.slice(
+      0,
+      quantityOfQuestions
+    );
 
-  console.log("quantity", quantity);
+    setQuestions(qtyQuestionsShuffeled);
+  }, [quantityOfQuestions]);
+
+  // Prev, next buttons functionality
 
   const handleShowNext = () => {
     setActiveQuestion(activeQuestion + 1);
@@ -60,6 +71,7 @@ const QuestionsForm = () => {
   };
   const isLastQuestion = questions.length - 1;
 
+  // Answer processing
   const handleAnswer = (
     questionId: number,
     answerId: number,
@@ -76,12 +88,9 @@ const QuestionsForm = () => {
     });
   };
 
+  // setting active question
   const handleQuestionSwitch = (index: number) => {
     setActiveQuestion(index);
-  };
-
-  const handleFinish = () => {
-    setFinish(true);
   };
 
   const correctAnswersCount = answers.filter(
@@ -92,84 +101,57 @@ const QuestionsForm = () => {
     (answer) => answer.id === questions[activeQuestion].id
   );
 
-  const handleStartNewTest = () => {
-    setActiveQuestion(0);
-    setAnswers([]);
-    setFinish(false);
-
-    // const shuffledQuestions = shuffleArray(originalQuestions).map(
-    //   (question) => ({
-    //     ...question,
-    //     answerOptions: shuffleArray(question.answerOptions),
-    //   })
-    // );
-    // setQuestions(shuffledQuestions);
-  };
-
-  const handleQuantity = (e: { target: { value: string } }) => {
-    const inputNumber = parseInt(e.target.value);
-    if (!isNaN(inputNumber)) {
-      setQuantity(inputNumber);
-    }
-    console.log("setQuantity", inputNumber);
-  };
-
   return (
     <>
-      {!finish ? (
-        <div>
-          <ul>
-            <QuestionCard
-              {...questions[activeQuestion]}
-              handleAnswer={handleAnswer}
-              selectedAnswerId={currentAnswer?.selectedAnswerId || null}
-            />
-          </ul>
-
-          {activeQuestion > 0 && <button onClick={handleShowPrev}>prev</button>}
-          {activeQuestion !== isLastQuestion ? (
-            <button onClick={handleShowNext}>next</button>
-          ) : (
-            <button onClick={handleFinish}>Finish test</button>
+      <div>
+        <div className="questionNumber">Вопрос {activeQuestion + 1} </div>
+        <ul className="questions">
+          <QuestionCard
+            quantity={0}
+            {...questions[activeQuestion]}
+            handleAnswer={handleAnswer}
+            selectedAnswerId={currentAnswer?.selectedAnswerId || null}
+          />
+        </ul>
+        <nav className="questionsNav">
+          {activeQuestion > 0 && (
+            <button onClick={handleShowPrev}>&lt;&lt;</button>
           )}
-
-          <ul className={"questionList"}>
-            {questions.map((question, index) => {
-              const el = answers.find((answer) => answer.id === question.id);
-              return (
-                <li
-                  onClick={() => handleQuestionSwitch(index)}
-                  key={question.id}
-                  className={cx(`question`, {
-                    isCorrect: el?.isCorrect,
-                    isWrong: !el?.isCorrect && el !== undefined,
-                    isActive: index === activeQuestion,
-                  })}
-                >
-                  {index + 1}
-                </li>
-              );
-            })}
-          </ul>
-          <span>Правильных ответов: {correctAnswersCount}</span>
-        </div>
-      ) : (
-        <div>
-          <span>
-            {correctAnswersCount > 36
-              ? `Супер! Вы прошли тест! Правильных ответов: ${correctAnswersCount}`
-              : `Вы провалили тест. Правильных ответов: ${correctAnswersCount}`}
-          </span>
-          <div>
-            <input
-              type="text"
-              placeholder="Enter questions quantity... "
-              onChange={handleQuantity}
-            />
-            <button onClick={handleStartNewTest}>Start new test</button>
-          </div>
-        </div>
-      )}
+          {activeQuestion !== isLastQuestion ? (
+            <button onClick={handleShowNext}>&gt;&gt;</button>
+          ) : (
+            <Link
+              to="/results"
+              state={{
+                importCorrectAnswersCount: correctAnswersCount,
+                importQuantityOfQuestions: quantityOfQuestions,
+              }}
+              className="link"
+            >
+              Finish test
+            </Link>
+          )}
+        </nav>
+        <ul className={"questionList"}>
+          {questions.map((question, index) => {
+            const el = answers.find((answer) => answer.id === question.id);
+            return (
+              <li
+                onClick={() => handleQuestionSwitch(index)}
+                key={question.id}
+                className={cx(`question`, {
+                  isCorrect: el?.isCorrect,
+                  isWrong: !el?.isCorrect && el !== undefined,
+                  isActive: index === activeQuestion,
+                })}
+              >
+                {index + 1}
+              </li>
+            );
+          })}
+        </ul>
+        <span>Правильных ответов: {correctAnswersCount}</span>
+      </div>
     </>
   );
 };
