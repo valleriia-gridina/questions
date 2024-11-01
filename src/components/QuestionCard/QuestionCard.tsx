@@ -1,4 +1,4 @@
-import { TAnswer, TQuestion } from "../../types/types";
+import { TAnswer, TQuestion } from "types/types";
 
 interface TProps extends TQuestion {
   onHandleAnswer: (answer: TAnswer) => void;
@@ -17,7 +17,7 @@ const QuestionCard = ({
   return (
     <li>
       <h3>
-        {currentNumber}. {title} <em>{id} - id number for test</em>
+        {currentNumber}. {title}
       </h3>
 
       {answerOptions.map((answ) => {
@@ -39,7 +39,7 @@ const QuestionCard = ({
                 value={answ.title}
                 disabled={answer?.isDisabled}
               />
-              {answ.title} <em>{answ.id} - id number for test</em>
+              {answ.title}
             </label>
           </div>
         );

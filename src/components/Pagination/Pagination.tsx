@@ -1,5 +1,5 @@
 import cx from "classnames";
-import { TAnswer, TQuestion } from "../../types/types";
+import { TAnswer, TQuestion } from "types/types";
 
 type TProps = {
   questions: TQuestion[];
@@ -25,7 +25,7 @@ const Pagination = ({
       <button
         className={"btn"}
         onClick={onClickBack}
-        style={{ margin: "20px" }}
+        style={{ marginRight: "20px" }}
         disabled={activeQuestionIndex === 0}
       >
         back

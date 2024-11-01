@@ -3,7 +3,7 @@ export type TQuestion = {
   title: string;
   answerOptions: { id: number; title: string; isCorrect: boolean }[];
   explanation: string;
-  currentNumber: number;
+  currentNumber?: number;
 };
 
 export type TAnswer = {

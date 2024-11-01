@@ -1,9 +1,9 @@
-import { useMemo, useState } from "react";
-import { QUESTIONS } from "../../constants/constants";
-import { shuffleArray } from "../../helpers/helpers";
-import QuestionCard from "../../components/QuestionCard/QuestionCard";
-import { TAnswer } from "../../types/types";
-import Pagination from "../../components/Pagination/Pagination";
+import { useEffect, useState } from "react";
+import { QUESTIONS as initialQuestions } from "constants/constants";
+import { shuffleArray } from "helpers/helpers";
+import QuestionCard from "components/QuestionCard/QuestionCard";
+import { TAnswer, TQuestion } from "types/types";
+import Pagination from "components/Pagination/Pagination";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const TestPage = () => {
@@ -14,19 +14,19 @@ const TestPage = () => {
   const mistakesNumber = Math.floor(questionsNumber / 10);
 
   const [activeQuestionIndex, setActiveQuestionIndex] = useState(0);
+  const [questions, setQuestions] = useState<TQuestion[]>(initialQuestions);
   const [answers, setAnswers] = useState<TAnswer[]>([]);
 
-  const questions = useMemo(
-    () =>
-      shuffleArray(QUESTIONS)
-        .slice(0, questionsNumber)
-        .map((question, index) => ({
-          ...question,
-          answerOptions: shuffleArray(question.answerOptions),
-          currentNumber: index + 1,
-        })),
-    [questionsNumber]
-  );
+  useEffect(() => {
+    const shuffledQuestions = shuffleArray(initialQuestions)
+      .slice(0, questionsNumber)
+      .map((question, index) => ({
+        ...question,
+        answerOptions: shuffleArray(question.answerOptions),
+        currentNumber: index + 1,
+      }));
+    setQuestions(shuffledQuestions);
+  }, [questionsNumber]);
 
   const handleAnswer = (answer: TAnswer) => {
     setAnswers([...answers, { ...answer }]);
@@ -67,7 +67,7 @@ const TestPage = () => {
       <h3>Test page test</h3>
       <p>
         You have <strong>{questionsNumber} questions</strong>. You can make only{" "}
-        <strong>{mistakesNumber} mistake(s)</strong>
+        <strong>{mistakesNumber}mistake(s)</strong>
       </p>
 
       <ul className="list questions">

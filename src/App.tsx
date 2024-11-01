@@ -4,6 +4,7 @@ import TestPage from "./pages/TestPage/TestPage";
 import ResultPage from "./pages/ResultPage/ResultPage";
 
 import "./App.css";
+import ErrorPage from "./pages/ErrorPage/ErrorPage";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/test" element={<TestPage />} />
         <Route path="/results" element={<ResultPage />} />
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
     </Router>
   );

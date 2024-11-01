@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { QUESTIONS } from "../../constants/constants";
+import { QUESTIONS } from "constants/constants";
 
 const HomePage = () => {
   const navigate = useNavigate();
