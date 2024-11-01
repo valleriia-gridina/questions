@@ -12,7 +12,7 @@ const HomePage = () => {
 
   const handleSubmit = (e: React.MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (questionsAmount !== 0 && questionsAmount <= fullQuestionsLength) {
+    if (questionsAmount > 0 && questionsAmount <= fullQuestionsLength) {
       navigate("/test", { state: { questionCount: questionsAmount } });
     }
     setError(true);
