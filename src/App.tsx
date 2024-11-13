@@ -25,17 +25,6 @@ const router = createBrowserRouter([
   },
 ]);
 
-{
-  /* <Router>
-  <Routes>
-    <Route path="/" element={<HomePage />} />
-    <Route path="/" element={} />
-    <Route path="/" element={< />} />
-    <Route path="*" element={<ErrorPage />} />
-  </Routes>
-</Router> */
-}
-
 function App() {
   return <RouterProvider router={router} />;
 }
