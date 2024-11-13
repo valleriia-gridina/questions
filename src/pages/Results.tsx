@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { rightQuestionsPercentage } from "../components/constants";
 
 // import quantity questions and correct answers with use location hook asn setup types
 
@@ -18,7 +19,8 @@ const Results = () => {
       <h1>Results</h1>
       <div className="results">
         <span>
-          {(importCorrectAnswersCount * 100) / importQuantityOfQuestions > 85
+          {(importCorrectAnswersCount * 100) / importQuantityOfQuestions >
+          rightQuestionsPercentage
             ? `Супер! Вы прошли тест! Правильных ответов: ${importCorrectAnswersCount}`
             : `Вы провалили тест. Правильных ответов: ${importCorrectAnswersCount}`}
         </span>

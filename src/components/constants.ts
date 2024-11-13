@@ -903,3 +903,5 @@ export const questions = [
 export const a = [];
 
 export const totalQuestions = questions.length;
+
+export const rightQuestionsPercentage = 85;
