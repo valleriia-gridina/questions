@@ -2,8 +2,6 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { rightQuestionsPercentage } from "../components/constants";
 
-// import quantity questions and correct answers with use location hook asn setup types
-
 type LocationState = {
   importQuantityOfQuestions: number;
   importCorrectAnswersCount: number;
