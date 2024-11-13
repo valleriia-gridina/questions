@@ -3,31 +3,7 @@ import { questions as originalQuestions } from "../constants";
 import QuestionCard from "../QuestionCard/QuestionCard";
 import { Link } from "react-router-dom";
 import cx from "classnames";
-
-type TAnswers = {
-  id: number;
-  isCorrect: boolean;
-  selectedAnswerId: number | null;
-};
-
-type AnswerOption = {
-  id: number;
-  title: string;
-  isCorrect: boolean;
-};
-
-type Question = {
-  id: number;
-  title: string;
-  answerOptions: AnswerOption[];
-  explanation: string;
-};
-
-type QuestionsProps = {
-  quantityOfQuestions: number;
-};
-
-// Shuffle the questions array
+import { TAnswers, TQuestionOrig, TQuestionsProps } from "../types";
 
 const shuffleArray = <T,>(array: T[]): T[] => {
   const shuffledArray = [...array];
@@ -38,12 +14,12 @@ const shuffleArray = <T,>(array: T[]): T[] => {
   return shuffledArray;
 };
 
-const QuestionsForm: React.FC<QuestionsProps> = ({ quantityOfQuestions }) => {
-  const [questions, setQuestions] = useState<Question[]>(originalQuestions);
+const QuestionsForm: React.FC<TQuestionsProps> = ({ quantityOfQuestions }) => {
+  const [questions, setQuestions] =
+    useState<TQuestionOrig[]>(originalQuestions);
   const [activeQuestion, setActiveQuestion] = useState(0);
   const [answers, setAnswers] = useState<TAnswers[]>([]);
 
-  // Shuffle answers
   useEffect(() => {
     const shuffledQuestions = shuffleArray(originalQuestions).map(
       (question) => ({
@@ -51,7 +27,6 @@ const QuestionsForm: React.FC<QuestionsProps> = ({ quantityOfQuestions }) => {
         answerOptions: shuffleArray(question.answerOptions),
       })
     );
-    // Show exact quantity of questions
     const qtyQuestionsShuffeled = shuffledQuestions.slice(
       0,
       quantityOfQuestions
@@ -60,35 +35,34 @@ const QuestionsForm: React.FC<QuestionsProps> = ({ quantityOfQuestions }) => {
     setQuestions(qtyQuestionsShuffeled);
   }, [quantityOfQuestions]);
 
-  // Prev, next buttons functionality
-
   const handleShowNext = () => {
     setActiveQuestion(activeQuestion + 1);
-    console.log(activeQuestion);
   };
   const handleShowPrev = () => {
     setActiveQuestion(activeQuestion - 1);
   };
   const isLastQuestion = questions.length - 1;
 
-  // Answer processing
-  const handleAnswer = (
-    questionId: number,
-    answerId: number,
-    isCorrect: boolean
-  ) => {
+  const handleAnswer = (questionId: number, answerId: number) => {
+    const isAnswerCorrect =
+      questions[activeQuestion].answerOptions.find(
+        (option) => option.id === answerId
+      )?.isCorrect ?? false;
     setAnswers((prevAnswers) => {
       const updatedAnswers = prevAnswers.filter(
         (answer) => answer.id !== questionId
       );
       return [
         ...updatedAnswers,
-        { id: questionId, selectedAnswerId: answerId, isCorrect },
+        {
+          id: questionId,
+          selectedAnswerId: answerId,
+          isCorrect: isAnswerCorrect,
+        },
       ];
     });
   };
 
-  // setting active question
   const handleQuestionSwitch = (index: number) => {
     setActiveQuestion(index);
   };
@@ -111,6 +85,7 @@ const QuestionsForm: React.FC<QuestionsProps> = ({ quantityOfQuestions }) => {
             {...questions[activeQuestion]}
             handleAnswer={handleAnswer}
             selectedAnswerId={currentAnswer?.selectedAnswerId || null}
+            isAnswerCorrect={currentAnswer?.isCorrect}
           />
         </ul>
         <nav className="questionsNav">
