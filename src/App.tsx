@@ -1,8 +1,31 @@
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+import HomePage from "./pages/HomePage.tsx";
+import QuestionsPage from "./pages/Questions.tsx";
+import ResultsPage from "./pages/Results.tsx";
+import NotFound from "./pages/NotFound.tsx";
 import "./App.css";
-import QuestionsForm from "./components/QuestionsForm/QuestionsForm";
+import "./index.css";
 
 function App() {
-  return <QuestionsForm />;
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <HomePage />,
+      errorElement: <NotFound />,
+    },
+    {
+      path: "/questions",
+      element: <QuestionsPage />,
+      errorElement: <NotFound />,
+    },
+    {
+      path: "/results",
+      element: <ResultsPage />,
+      errorElement: <NotFound />,
+    },
+  ]);
+  return <RouterProvider router={router} />;
 }
 
 export default App;
