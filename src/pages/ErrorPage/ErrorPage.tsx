@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const ErrorPage = () => {
   return (
     <>
-      <h3>Page is not found</h3>
+      <h1>Page is not found</h1>
       <Link to="/">Back to home page</Link>
     </>
   );

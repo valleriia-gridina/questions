@@ -5,6 +5,7 @@ import QuestionCard from "components/QuestionCard/QuestionCard";
 import { TAnswer, TQuestion } from "types/types";
 import Pagination from "components/Pagination/Pagination";
 import { useLocation, useNavigate } from "react-router-dom";
+import Wrapper from "components/Wrapper/Wrapper";
 
 const TestPage = () => {
   const navigate = useNavigate();
@@ -63,8 +64,8 @@ const TestPage = () => {
   );
 
   return (
-    <>
-      <h3>Test page test</h3>
+    <Wrapper>
+      <h1>Test</h1>
       <p>
         You have <strong>{questionsNumber} questions</strong>. You can make only{" "}
         <strong>{mistakesNumber}mistake(s)</strong>
@@ -87,7 +88,7 @@ const TestPage = () => {
         onClickNext={handleShowNext}
         onClickBack={handleShowBack}
       />
-    </>
+    </Wrapper>
   );
 };
 
