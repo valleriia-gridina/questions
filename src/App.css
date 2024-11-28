@@ -1,56 +1,49 @@
 #root {
-  max-width: 1280px;
+  width: 1000px;
+  min-height: 100vh;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  padding: 0 2rem;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
+header {
+  background-color: lightblue;
+  padding: 15px;
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+  > a {
+    background-color: darkblue;
+    color: white;
+    padding: 5px 10px;
+    text-decoration: none;
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+nav {
+  a {
+    margin-right: 20px;
   }
 }
 
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
-
-.questionList {
+.pagination {
   display: flex;
   list-style: none;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 15px;
 }
 
-.question {
+.paginationItem {
   padding: 5px;
   border: solid 1px grey;
-
   background-color: lightgrey;
+}
+
+.paginationItem button:focus,
+.paginationItem button:active {
+  outline: 0;
 }
 
 .isCorrect {
@@ -59,4 +52,75 @@
 
 .isWrong {
   background-color: red;
+}
+
+.isActive {
+  font-weight: 700;
+  border: 2px solid #000;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 15px;
+}
+
+.questions li {
+  margin-bottom: 10px;
+}
+
+.btnNumber {
+  padding: 0 2px;
+  background-color: transparent;
+}
+
+.btn {
+  margin-bottom: 15px;
+}
+
+.result {
+  font-weight: 700;
+  color: green;
+}
+
+.failed {
+  font-weight: 700;
+  color: red;
+}
+
+.explanation {
+  color: red;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 15px;
+}
+
+input {
+  margin-bottom: 10px;
+}
+
+.error {
+  color: red;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+em {
+  color: grey;
+}
+
+form {
+  input {
+    display: block;
+    width: 300px;
+    height: 30px;
+    margin-bottom: 15px;
+  }
+
+  button {
+    margin-bottom: 15px;
+  }
 }

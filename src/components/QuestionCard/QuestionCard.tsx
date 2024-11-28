@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { TQuestion } from "../types";
+import { TAnswer, TQuestion } from "types/types";
 
 interface TProps extends TQuestion {
-  handleAnswer: (id: number, isCorrect: boolean) => void;
+  onHandleAnswer: (answer: TAnswer) => void;
+  answer?: TAnswer;
 }
 
 const QuestionCard = ({
@@ -10,33 +10,43 @@ const QuestionCard = ({
   title,
   answerOptions,
   explanation,
-  handleAnswer,
+  currentNumber,
+  onHandleAnswer,
+  answer,
 }: TProps) => {
-  const [isCorrect, setIsCorrect] = useState<undefined | boolean>(undefined);
-
   return (
     <li>
-      <h3>{title}</h3>
+      <h3>
+        {currentNumber}. {title}
+      </h3>
 
-      {answerOptions.map((item) => {
+      {answerOptions.map((answ) => {
         return (
-          <div key={item.id}>
+          <div key={answ.id}>
             <label>
               <input
                 type="radio"
                 name={`q${id}`}
                 onChange={() => {
-                  handleAnswer(id, item.isCorrect);
-                  setIsCorrect(item.isCorrect);
+                  onHandleAnswer({
+                    id,
+                    isCorrect: answ.isCorrect,
+                    isDisabled: true,
+                    value: answ.title,
+                  });
                 }}
+                checked={answer?.value === answ.title}
+                value={answ.title}
+                disabled={answer?.isDisabled}
               />
-              {item.title}
+              {answ.title}
             </label>
           </div>
         );
       })}
-
-      {!isCorrect && isCorrect !== undefined && <p>{explanation}</p>}
+      {answer && !answer?.isCorrect && (
+        <p className="explanation">{explanation}</p>
+      )}
     </li>
   );
 };
